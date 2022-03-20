@@ -12,11 +12,15 @@ func MainPageContent() string {
 
 func hello(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, MainPageContent())
+	fmt.Fprintf(w, "%s", MainPageContent())
 
 }
 
 func Init() {
 	http.HandleFunc("/", hello)
-	http.ListenAndServe(":8090", nil)
+	err := http.ListenAndServe(":8090", nil)
+
+	if err != nil {
+		fmt.Printf("error occurred during server initialization ---> %s", err.Error())
+	}
 }
