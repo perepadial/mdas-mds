@@ -28,7 +28,8 @@ jobs:
       id: meta
       uses: docker/metadata-action@v3
       with:
-        images: go-hello:alpine
+        images: go-hello
+        tags: alpine
         
 
     - name: Build Image and push
