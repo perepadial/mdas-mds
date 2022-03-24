@@ -29,7 +29,7 @@ jobs:
       uses: docker/metadata-action@v3
       with:
         images: perepadial/go-hello
-        tags: alpine
+        tags: alpine2
         
 
     - name: Build Image and push
