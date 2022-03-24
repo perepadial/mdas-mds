@@ -28,7 +28,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v3
       with:
-        images: perepadial/go-hello:alpine
+        images: go-hello:alpine
         github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build Image and push
