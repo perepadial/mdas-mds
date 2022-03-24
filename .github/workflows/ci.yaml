@@ -28,7 +28,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v3
       with:
-        images: go-hello
+        images: perepadial/go-hello
         tags: alpine
         
 
