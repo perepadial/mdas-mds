@@ -4,7 +4,7 @@ EXPOSE 8090
 
 RUN mkdir /server
 
-COPY ./app /server
+COPY app /server
 
 WORKDIR /server
 
