@@ -40,7 +40,12 @@ jobs:
       run: |
           docker build . -t gohello.azurecr.io/gohello:alpine-latest
           docker push gohello.azurecr.io/gohello:alpine-latest
-    
+          
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_mdascluster_kubeConfig }}
+      id: login
+
     - uses: azure/k8s-create-secret@v1
       with:
         namespace: default
