@@ -51,4 +51,4 @@ jobs:
         namespace: ${{env.OPENSHIFT_NAMESPACE}}
 
     - run: |
-          sudo .github/deployToOpenshift.sh ${{ env.APP_NAME }} perepadial/go-hello:alpine ${{ env.OPENSHIFT_NAMESPACE }}
+          sudo sh .github/deployToOpenshift.sh ${{ env.APP_NAME }} perepadial/go-hello:alpine ${{ env.OPENSHIFT_NAMESPACE }}
