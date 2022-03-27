@@ -7,6 +7,13 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: gohello.azurecr.io
+        username: ${{ secrets.acr_gohello_username }}
+        password: ${{ secrets.acr_gohello_password }}
+
     - uses: azure/k8s-set-context@v1
       with:
          kubeconfig: ${{ secrets.aks_mdascluster_kubeConfig }}
