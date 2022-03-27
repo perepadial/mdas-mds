@@ -1,3 +1,10 @@
+name: CI
+
+env:
+  APP_NAME: gohello
+  OPENSHIFT_NAMESPACE: perepadial-dev
+
+
 on: [push]
 
 jobs:
@@ -41,4 +48,7 @@ jobs:
         openshift_server_url:  ${{secrets.OPENSHIFT_SERVER}}
         openshift_token: ${{secrets.OPENSHIFT_TOKEN}}
         insecure_skip_tls_verify: true
-        namespace: "%PROJECT%"
+        namespace: ${{env.OPENSHIFT_NAMESPACE}}
+
+    - run: | 
+         "${GITHUB_WORKSPACE}/.github/deployToOpenSHift.sh" ${{ env.APP_NAME }} perepadial/go-hello:alpine ${{ env.OPENSHIFT_NAMESPACE }}
