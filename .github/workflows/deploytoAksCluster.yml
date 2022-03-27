@@ -7,7 +7,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    
+
     - uses: azure/docker-login@v1
       with:
         login-server: gohello.azurecr.io
@@ -39,6 +39,7 @@ jobs:
       with:
         namespace: default
         manifests: |
+          ls -la
           manifests/deployment.yml
           manifests/service.yml
         images: |
