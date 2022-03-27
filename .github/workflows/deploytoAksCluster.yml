@@ -34,12 +34,11 @@ jobs:
         container-registry-username: ${{ secrets.acr_gohello_username }}
         container-registry-password: ${{ secrets.acr_gohello_password }}
         secret-name: mdasclusterdockerauth
-       
+    - run: ls -la   
     - uses: azure/k8s-deploy@v1.2
       with:
         namespace: default
         manifests: |
-          ls -la
           manifests/deployment.yml
           manifests/service.yml
         images: |
