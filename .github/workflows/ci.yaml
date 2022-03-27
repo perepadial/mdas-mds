@@ -52,5 +52,5 @@ jobs:
 
     - run: |
          pwd
-         ls -l 
-         "./.github/deployToOpenSHift.sh" ${{ env.APP_NAME }} perepadial/go-hello:alpine ${{ env.OPENSHIFT_NAMESPACE }}
+         ls -la 
+         ".github/deployToOpenSHift.sh" ${{ env.APP_NAME }} perepadial/go-hello:alpine ${{ env.OPENSHIFT_NAMESPACE }}
