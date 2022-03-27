@@ -40,3 +40,22 @@ jobs:
       run: |
           docker build . -t gohello.azurecr.io/gohello:alpine-latest
           docker push gohello.azurecr.io/gohello:alpine-latest
+    
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: default
+        container-registry-url: gohello.azurecr.io
+        container-registry-username: ${{ secrets.acr_gohello_username }}
+        container-registry-password: ${{ secrets.acr_gohello_password }}
+        secret-name: mdasclusterdockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: default
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          gohello.azurecr.io/mdascluster:${{ github.sha }}
+        imagepullsecrets: |
+          mdasclusterdockerauth
