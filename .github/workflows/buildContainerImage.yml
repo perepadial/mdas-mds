@@ -1,0 +1,35 @@
+on: 
+  push:
+    branches:
+      - "feature/**"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: actions/setup-go@v3
+   
+    - name: Install Go linter
+      run: wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.45.0
+    
+    - name: Run linter
+      run: ./bin/golangci-lint run
+
+    - name: Run tests
+      run: go test ./src/tests/unit_test.go
+
+    - name: Build project
+      run: go build -o app .
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: gohello.azurecr.io
+        username: ${{ secrets.acr_gohello_username }}
+        password: ${{ secrets.acr_gohello_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t gohello.azurecr.io/mdascluster:alpine-latest --label dockerfile-path=Dockerfile
+        docker push gohello.azurecr.io/mdascluster:alpine-latest 
