@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "mdascluster-2b7f"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "mdascluster-2b7f"
+  template:
+    metadata:
+      labels:
+        app: "mdascluster-2b7f"
+    spec:
+      containers:
+        - name: "mdascluster-2b7f"
+          image: "gohello.azurecr.io/mdascluster"
+          ports:
+          - containerPort: 8090

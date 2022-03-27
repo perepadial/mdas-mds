@@ -1,0 +1,40 @@
+on: 
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_mdascluster_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep default | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace default`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: default
+        container-registry-url: gohello.azurecr.io
+        container-registry-username: ${{ secrets.acr_gohello_username }}
+        container-registry-password: ${{ secrets.acr_gohello_password }}
+        secret-name: mdasclusterdockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: default
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          gohello.azurecr.io/mdascluster:alpine-latest
+        imagepullsecrets: |
+          mdasclusterdockerauth
