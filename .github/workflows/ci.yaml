@@ -1,10 +1,5 @@
 name: CI
 
-env:
-  APP_NAME: gohello
-  OPENSHIFT_NAMESPACE: perepadial-dev
-
-
 on: [push]
 
 jobs:
@@ -35,9 +30,13 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         
 
-    - name: Build Image and push
-      uses: docker/build-push-action@v2
+    - uses: azure/docker-login@v1
       with:
-          context: .
-          push: true
-          tags: perepadial/go-hello:alpine
+        login-server: gohello.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+        
+    - name: build and push container image 
+      run: |
+          docker build . -t gohello.azurecr.io/gohello:alpine-latest
+          docker push gohello.azurecr.io/gohello:alpine-latest
