@@ -50,5 +50,7 @@ jobs:
         insecure_skip_tls_verify: true
         namespace: ${{env.OPENSHIFT_NAMESPACE}}
 
-    - run: | 
+    - run: |
+         pwd
+         ls -l 
          "./.github/deployToOpenSHift.sh" ${{ env.APP_NAME }} perepadial/go-hello:alpine ${{ env.OPENSHIFT_NAMESPACE }}
