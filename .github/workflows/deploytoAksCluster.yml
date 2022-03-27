@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    - uses: actions/checkout@v2
+
     - uses: azure/docker-login@v1
       with:
         login-server: gohello.azurecr.io
@@ -34,7 +36,7 @@ jobs:
         container-registry-username: ${{ secrets.acr_gohello_username }}
         container-registry-password: ${{ secrets.acr_gohello_password }}
         secret-name: mdasclusterdockerauth
-    - run: ls -la   
+
     - uses: azure/k8s-deploy@v1.2
       with:
         namespace: default
