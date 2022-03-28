@@ -16,6 +16,12 @@ jobs:
         username: ${{ secrets.acr_gohello_username }}
         password: ${{ secrets.acr_gohello_password }}
 
+    - name: Run e2e tests
+      run: |
+        docker run -p 8090:8090  gohello.azurecr.io/mdascluster:alpine-latest
+        sleep 10
+        go test ./src/tests/e2e_test.go
+
     - uses: azure/k8s-set-context@v1
       with:
          kubeconfig: ${{ secrets.aks_mdascluster_kubeConfig }}
