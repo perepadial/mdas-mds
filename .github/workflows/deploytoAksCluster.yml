@@ -4,7 +4,7 @@ on:
       - "main"
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
 
@@ -16,11 +16,11 @@ jobs:
         username: ${{ secrets.acr_gohello_username }}
         password: ${{ secrets.acr_gohello_password }}
 
-    - name: Run e2e tests
-      run: |
-        docker run -p 8090:8090  gohello.azurecr.io/mdascluster:alpine-latest
-        sleep 10
-        go test ./src/tests/e2e_test.go
+    - name: Run container for test
+      run: docker run -p 8090:8090 gohello.azurecr.io/mdascluster:alpine-latest
+
+    - name: Run e2e
+      run: go test ./src/tests/e2e_test.go
 
     - uses: azure/k8s-set-context@v1
       with:
