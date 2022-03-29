@@ -1,10 +1,19 @@
 on: push
 
 jobs:
-  test:
+  container:
+    runs-on: ubuntu-latest
+    container: gohello.azurecr.io/mdascluster:alpine-latest
+    steps:
+      - run: ./app
+  
+  e2e-test: 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v3
+      - name: Run test
+        run: go test ./src/tests/e2e_test.go
+        
 
-    - name: setup docker image
-      run: docker run -p 8090:8090  gohello.azurecr.io/mdascluster:alpine-latest
+
