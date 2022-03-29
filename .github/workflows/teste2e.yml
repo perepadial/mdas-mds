@@ -1,14 +1,25 @@
 on: push
 
 jobs:
+  loginazure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: azure/docker-login@v1
+        with:
+          login-server: gohello.azurecr.io
+          username: ${{ secrets.acr_gohello_username }}
+          password: ${{ secrets.acr_gohello_password }}
+
   container:
     runs-on: ubuntu-latest
+    needs: loginazure
     container: gohello.azurecr.io/mdascluster:alpine-latest
     steps:
       - run: ./app
   
   e2e-test: 
     runs-on: ubuntu-latest
+    needs: container
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v3
