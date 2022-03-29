@@ -70,4 +70,4 @@ jobs:
           mdasclusterdockerauth
 
     - name: Apply Deployment
-      run: kubectl rollout restart manifests/deployment.yml --namespace=default
+      run: kubectl rollout restart deployment mdascluster-2b7f --namespace=default
