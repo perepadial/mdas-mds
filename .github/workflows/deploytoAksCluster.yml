@@ -65,6 +65,7 @@ jobs:
           manifests/deployment.yml
           manifests/service.yml
         images: |
-          gohello.azurecr.io/mdascluster:alpine-latest
+          gohello.azurecr.io/mdascluster:alpine-latest.${{github.sha}}
         imagepullsecrets: |
           mdasclusterdockerauth
+    
