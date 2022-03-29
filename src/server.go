@@ -7,7 +7,7 @@ import (
 )
 
 func MainPageContent() string {
-	return "Hello World ! \n"
+	return "Hello Go ! \n"
 }
 
 func hello(w http.ResponseWriter, req *http.Request) {
