@@ -10,6 +10,6 @@ jobs:
           username: ${{ secrets.acr_gohello_username }}
           password: ${{ secrets.acr_gohello_password }}
       - name: run docker image
-        run: docker run -p 8090:8090  gohello.azurecr.io/mdascluster:alpine-latest
+        run: docker run -p 8090:8090 -d  gohello.azurecr.io/mdascluster:alpine-latest
 
 
