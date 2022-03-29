@@ -68,3 +68,6 @@ jobs:
           gohello.azurecr.io/mdascluster:alpine-latest
         imagepullsecrets: |
           mdasclusterdockerauth
+
+    - name: Apply Deployment
+      run: kubectl rollout restart manifests/deployment.yml --namespace=default
