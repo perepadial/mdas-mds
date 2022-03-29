@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: "mdascluster-2b7f"
-          image: "gohello.azurecr.io/mdascluster:alpine-latest"
+          image: "gohello.azurecr.io/mdascluster"
           imagePullPolicy: Always
           ports:
           - containerPort: 8090
